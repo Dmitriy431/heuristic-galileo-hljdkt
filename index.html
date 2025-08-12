@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IQ тест</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #74abe2, #5563de);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        color: white;
+      }
+      #container {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+      }
+      h1 {
+        margin-top: 0;
+        font-size: 28px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+        padding-bottom: 10px;
+      }
+      h2 {
+        margin-top: 0;
+      }
+      button {
+        padding: 10px 15px;
+        margin: 8px;
+        border: none;
+        border-radius: 8px;
+        background-color: #ffcc00;
+        color: #333;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      button:hover {
+        background-color: #ffdb4d;
+      }
+      #result {
+        font-size: 36px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #ffcc00;
+      }
+      #comment {
+        margin-top: 15px;
+        font-size: 16px;
+        color: #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>IQ тест</h1>
+      <h2 id="question"></h2>
+      <div id="answers"></div>
+    </div>
+
+    <script>
+      const questions = [
+        { question: "Вопрос 1: 2+2?", answers: ["3", "4", "5"] },
+        {
+          question: "Вопрос 2: Столица Франции?",
+          answers: ["Лондон", "Париж", "Берлин"],
+        },
+        { question: "Вопрос 3: 5*3?", answers: ["15", "10", "20"] },
+        {
+          question: "Вопрос 4: Цвет неба?",
+          answers: ["Синий", "Зелёный", "Красный"],
+        },
+        {
+          question: "Вопрос 5: Сколько дней в неделе?",
+          answers: ["5", "7", "10"],
+        },
+        {
+          question: "Выберите ваш возраст:",
+          answers: ["<18", "18-30", "31-50", "50+"],
+        },
+      ];
+
+      let currentQuestion = 0;
+
+      function loadQuestion() {
+        document.getElementById("answers").innerHTML = "";
+        document.getElementById("question").innerText =
+          questions[currentQuestion].question;
+        questions[currentQuestion].answers.forEach((answer) => {
+          const btn = document.createElement("button");
+          btn.innerText = answer;
+          btn.onclick = () => {
+            if (currentQuestion < questions.length - 1) {
+              currentQuestion++;
+              loadQuestion();
+            } else {
+              showIQ();
+            }
+          };
+          document.getElementById("answers").appendChild(btn);
+        });
+      }
+
+      function showIQ() {
+        const iq = Math.floor(Math.random() * (150 - 24 + 1)) + 24;
+        let comment = "";
+        if (iq > 130) {
+          comment =
+            "Молодец, но результат походу не верный. Пройди тест лучше заново.";
+        } else {
+          comment =
+            "Всё равно молодец, но это очень слабый результат. Нужно лучше учиться.";
+        }
+        document.getElementById("container").innerHTML = `
+        <h1>IQ тест</h1>
+        <h2>Ваш IQ составляет</h2>
+        <div id="result">${iq}</div>
+        <div id="comment">${comment}</div>
+    `;
+      }
+
+      loadQuestion();
+    </script>
+  </body>
+</html>
